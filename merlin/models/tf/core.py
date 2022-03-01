@@ -2199,6 +2199,9 @@ class ModelBlock(Block, tf.keras.Model):
         outputs = self.block(inputs, **kwargs)
         return outputs
 
+    def build(self, input_shapes):
+        return self.block.build(input_shapes)
+
     @property
     def schema(self) -> Schema:
         return self.block.schema
@@ -2365,9 +2368,9 @@ class Model(tf.keras.Model, LossMixin, MetricsMixin):
         if hasattr(x, "to_ddf"):
             if not batch_size:
                 raise ValueError("batch_size must be specified when using merlin-dataset.")
-            from .dataset import Dataset
+            from .dataset import BatchedDataset
 
-            x = Dataset(x, batch_size=batch_size, **kwargs)
+            x = BatchedDataset(x, batch_size=batch_size, **kwargs)
 
         return super().fit(
             x,
