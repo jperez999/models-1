@@ -333,6 +333,10 @@ class ItemRetrievalScorer(Block):
                     positive_item_ids, neg_items_ids, negative_scores
                 )
 
+                if len(negative_scores.shape) == 3:
+                    negative_scores = tf.squeeze(negative_scores)
+
+            print(negative_scores)
             predictions = tf.concat([positive_scores, negative_scores], axis=-1)
 
         # Positives in the first column and negatives in the subsequent columns
@@ -360,7 +364,7 @@ class ItemRetrievalScorer(Block):
         )
 
         # Setting a very small value for false negatives (accidental hits) so that it has
-        # negligicle effect on the loss functions
+        # negligible effect on the loss functions
         negative_scores = tf.where(
             false_negatives_mask,
             tf.ones_like(negative_scores) * self.false_negatives_score,
