@@ -6,7 +6,7 @@ from ..blocks.multi_task import PredictionTasks
 from ..core import ParallelPredictionBlock, PredictionTask
 
 
-def _parse_prediction_tasks(
+def parse_prediction_tasks(
     schema: Schema,
     prediction_tasks: Optional[
         Union[PredictionTask, List[PredictionTask], ParallelPredictionBlock]

@@ -10,7 +10,7 @@ from ..core import Block, BlockType, Model, ParallelPredictionBlock, PredictionT
 from ..losses import LossType
 from ..metrics.ranking import ranking_metrics
 from ..prediction.item_prediction import ItemRetrievalTask, ItemSampler, NextItemPredictionTask
-from .utils import _parse_prediction_tasks
+from .utils import parse_prediction_tasks
 
 
 def MatrixFactorizationModel(
@@ -74,7 +74,7 @@ def MatrixFactorizationModel(
             **kwargs,
         )
 
-    prediction_tasks = _parse_prediction_tasks(schema, prediction_tasks)
+    prediction_tasks = parse_prediction_tasks(schema, prediction_tasks)
     two_tower = MatrixFactorizationBlock(
         schema=schema,
         dim=dim,
@@ -161,7 +161,7 @@ def TwoTowerModel(
             **kwargs,
         )
 
-    prediction_tasks = _parse_prediction_tasks(schema, prediction_tasks)
+    prediction_tasks = parse_prediction_tasks(schema, prediction_tasks)
     two_tower = TwoTowerBlock(
         schema=schema,
         query_tower=query_tower,
