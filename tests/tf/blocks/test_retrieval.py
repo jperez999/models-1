@@ -47,7 +47,7 @@ def test_matrix_factorization_embedding_export(music_streaming_data: SyntheticDa
     model = mf.connect(ml.BinaryClassificationTask("like"))
     model.compile(optimizer="adam")
 
-    model.fit(music_streaming_data.tf_dataloader(), epochs=5)
+    model.fit(music_streaming_data.dataset, batch_size=50, epochs=5)
 
     item_embedding_parquet = str(tmp_path / "items.parquet")
     mf.export_embedding_table(Tags.ITEM_ID, item_embedding_parquet, gpu=False)
