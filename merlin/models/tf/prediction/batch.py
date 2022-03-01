@@ -8,7 +8,7 @@ from merlin.schema import Schema, Tags
 
 from ...utils.schema import select_targets
 from ..core import Block, Model, RetrievalModel
-from ..dataset import Dataset
+from ..dataset import BatchedDataset
 
 
 class ModelEncode:
@@ -166,7 +166,7 @@ def data_iterator_func(schema, batch_size: int = 512):
     targets = select_targets(schema).column_names
 
     def data_iterator(dataset):
-        return Dataset(
+        return BatchedDataset(
             merlin.io.dataset.Dataset(dataset),
             batch_size=batch_size,
             cat_names=cat_cols,
